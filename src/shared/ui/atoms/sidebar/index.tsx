@@ -27,10 +27,12 @@ const SidebarWrap = styled.div `
     flex-direction: column;
     justify-content: space-between;
     height: calc(100vh - 48px);
-    max-width: 30%;
+    min-width: 10%;
     background-color: black;
     color: white;
-    overflow: auto;
+    overflow: visible;
+    position: sticky;
+    top: 48px;
   
     .sidebar-header {
         padding: 1rem;

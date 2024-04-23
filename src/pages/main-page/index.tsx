@@ -1,32 +1,33 @@
 import styled from "styled-components";
-import {Column, Grid} from "@carbon/react";
-import {Sidebar} from "../../shared/ui/atoms/sidebar";
+import {useGate} from "effector-react";
+import {MainPageGate} from "./model";
+import {Sidebar} from "shared/ui";
 
 export const MainPage = () => {
+    useGate(MainPageGate)
+
     return (
-        <Grid condensed>
-            <Column sm={100}>
-                <MainPageWrap>
-                    <Sidebar header='Header' footer='Footerrrrrrrrreeeeeeeeeeeeeeeeeeeeeeeee eeeeerreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee eeeeeeeee eeeeeeeeeerrrrrrrrrrrrrrrrrrrrrrrrwerwrwerwerwerwerweeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeerrrrrrrrrr' >123</Sidebar>
-                </MainPageWrap>
-            </Column>
-        </Grid>
+        <MainPageWrap>
+            <div className='main-page-content-container'>
+
+            </div>
+            <div className='sidebar-container'>
+                <Sidebar header='Index' footer='  eeeeeeeee '>123jdhf;kjsldhf;k ;sdlfh;s dsdl fh;sdljh s;d h;sk jh;s
+                    kjdhf; kjsdhf ;kjsdh f</Sidebar>
+            </div>
+        </MainPageWrap>
     )
 }
 
 const MainPageWrap = styled.div`
     display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    
-    .block-wrapper {
-        width: 49%;
-        border: solid 1px black;
-        padding: 1rem;
+    width: 100%;
+
+    .main-page-content-container {
+        flex: 3;
     }
 
-    div::-webkit-scrollbar {
-        width: 0 !important;
-        display: none;
+    .sidebar-container {
+        flex: 1;
     }
 `

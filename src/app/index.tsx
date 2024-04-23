@@ -1,19 +1,17 @@
 import React from 'react';
-import {BrowserRouter, Route, Routes} from "react-router-dom";
-import {routes} from "../pages";
-import {HeaderMenu} from "../features/header/header-menu";
 import styled from "styled-components";
-
-
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {Header} from "features";
+import {routes} from "pages";
 export const App = () => {
     return (
         <BrowserRouter>
-            <HeaderMenu routes={routes}/>
+            <Header routes={routes}/>
             <PageWrap>
                 <Routes>
 
-                    {routes.map(({path, name, component}) => {
-                        return <Route key={name} path={path} element={component}/>
+                    {routes.map(({path, name, index, component}) => {
+                        return <Route index={index}  key={name} path={path} element={component}/>
                     })}
 
                 </Routes>

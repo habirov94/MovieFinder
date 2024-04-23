@@ -1,5 +1,6 @@
-import {IRoutes} from "../../shared/types/routes";
+import {IRoutes} from "shared/types";
 
-export interface IHeaderMenu {
+
+export interface IHeader {
     routes:IRoutes[]
 }
