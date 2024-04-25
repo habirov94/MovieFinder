@@ -7,7 +7,6 @@ export const App = () => {
     return (
         <BrowserRouter>
             <Header routes={routes}/>
-            <PageWrap>
                 <Routes>
 
                     {routes.map(({path, name, index, component}) => {
@@ -15,11 +14,6 @@ export const App = () => {
                     })}
 
                 </Routes>
-            </PageWrap>
         </BrowserRouter>
     );
 }
-
-const PageWrap = styled.div`
-    padding-top: 3rem;
-`

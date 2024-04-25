@@ -1,45 +1,34 @@
-import React from "react";
-import styled from "styled-components";
-import {Header as CarbonHeader, Link, Grid, Column} from "@carbon/react";
-import {IHeader} from "./types";
+import React, {useState} from "react";
+import {AppBar, Box, IconButton, Link, Toolbar, Typography} from "@mui/material";
+import MenuIcon from '@mui/icons-material/Menu';
 import {Messages} from "shared/messages";
-
-
+import {Menu} from "shared/ui";
+import {IHeader} from "./types";
 
 export const Header: React.FC<IHeader> = ({routes}) => {
+
+    const [open, setOpen] = useState(false);
+
     return (
-        <HeaderWrap>
-            <CarbonHeader>
-                <Grid condensed>
-                    <p className="header-title">{Messages.header.title}</p>
-                </Grid>
-                <Grid condensed>
-                    {routes
-                        .filter(({isVisible}) => isVisible)
-                        .map(({path, name}) => {
-                            return <Column sm={1} key={name}><Link href={path} >{name}</Link></Column>
-                        })}
-                </Grid>
-            </CarbonHeader>
-        </HeaderWrap>
+        <Box sx={{ flexGrow: 1 }}>
+            <AppBar position="static">
+                <Toolbar>
+                    <IconButton
+                        size="large"
+                        edge="start"
+                        color="inherit"
+                        aria-label="menu"
+                        sx={{ mr: 2 }}
+                        onClick={() => setOpen(true)}
+                    >
+                        <MenuIcon />
+                    </IconButton>
+                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                        {Messages.header.title}
+                    </Typography>
+                    <Menu routes={routes} open={open} setOpen={setOpen} />
+                </Toolbar>
+            </AppBar>
+        </Box>
     )
 }
-
-const HeaderWrap = styled.div `
-    .cds--header {
-        background-color: #000000;
-        
-    }
-    .cds--link {
-        text-decoration: none;
-        color: aliceblue;
-    }
-    .cds--link:hover {
-        text-decoration: none;
-        color: aliceblue;
-    }
-    .header-title {
-        color: aliceblue;
-    }
-    
-`

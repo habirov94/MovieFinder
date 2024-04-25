@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import {Box, Paper, Toolbar} from "@mui/material";
 
 interface ISidebar {
     children: React.ReactNode,
@@ -6,45 +7,46 @@ interface ISidebar {
     footer?: React.ReactNode,
 }
 
-export const Sidebar:React.FC <ISidebar> = ({
+export const Sidebar: React.FC<ISidebar> = ({
                                                 children,
-                                                header ,
+                                                header,
                                                 footer
-}) => {
+                                            }) => {
     return (
         <SidebarWrap>
-            <div className='sidebar-contetn-container'>
-                <div className='sidebar-header'>{header}</div>
-                <div className='sidebar-children'>{children}</div>
-            </div>
-            <div className='sidebar-footer'>{footer}</div>
+            <Paper elevation={3} className="sidebar-paper">
+                <div className='sidebar-contetn-container'>
+                    <div className='sidebar-header'>{header}</div>
+                    <div className='sidebar-children'>{children}</div>
+                </div>
+                <div className='sidebar-footer'>{footer}</div>
+            </Paper>
         </SidebarWrap>
     )
 }
 
-const SidebarWrap = styled.div `
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: calc(100vh - 48px);
-    min-width: 10%;
-    background-color: black;
-    color: white;
-    overflow: visible;
-    position: sticky;
-    top: 48px;
-  
-    .sidebar-header {
-        padding: 1rem;
-        border-bottom: solid 1px white;
+const SidebarWrap = styled.div`
+    .sidebar-paper {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: calc(100vh - 63px);
+        min-width: 10%;
+        overflow: visible;
+        position: sticky;
     }
     
+    .sidebar-header {
+        padding: 1rem;
+        border-bottom: solid 1px black;
+    }
+
     .sidebar-children {
         padding: 1rem;
     }
-    
+
     .sidebar-footer {
-        border-top: solid 1px white;
+        border-top: solid 1px black;
     }
 `
 
