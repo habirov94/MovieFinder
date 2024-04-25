@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {Box, Paper, Toolbar} from "@mui/material";
+import {Paper} from "@mui/material";
 
 interface ISidebar {
     children: React.ReactNode,

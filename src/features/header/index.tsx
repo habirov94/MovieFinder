@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {AppBar, Box, IconButton, Link, Toolbar, Typography} from "@mui/material";
+import {AppBar, Box, IconButton, Toolbar, Typography} from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import {Messages} from "shared/messages";
 import {Menu} from "shared/ui";
