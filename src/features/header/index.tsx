@@ -26,6 +26,7 @@ export const Header: React.FC<IHeader> = ({routes}) => {
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         {Messages.header.title}
                     </Typography>
+                    {/*Перенести компнент меню отсюда*/}
                     <Menu routes={routes} open={open} setOpen={setOpen} />
                 </Toolbar>
             </AppBar>

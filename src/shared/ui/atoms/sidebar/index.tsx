@@ -46,7 +46,7 @@ const SidebarWrap = styled.div`
     }
 
     .sidebar-footer {
-        border-top: solid 1px black;
+        padding: 1rem;
     }
 `
 
