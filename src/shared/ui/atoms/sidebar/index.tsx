@@ -33,7 +33,6 @@ const SidebarWrap = styled.div`
         height: calc(100vh - 63px);
         min-width: 10%;
         overflow: visible;
-        position: sticky;
     }
     
     .sidebar-header {

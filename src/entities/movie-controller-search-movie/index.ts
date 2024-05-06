@@ -9,8 +9,7 @@ export const fxMovieControllerSearchMovie = AppDomain.createEffect<any, SearchMo
     return V14service.movieControllerSearchMovieV14({query: name}, {headers: apiKey})
 })
 
-const $filmsListByName = createStore<SearchMovieResponseDtoV14 | null>(null)
-
+export const $filmsListByName = createStore<SearchMovieResponseDtoV14 | null>(null)
 
 sample({
     // @ts-ignore

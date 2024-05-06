@@ -11,7 +11,7 @@ export const Header: React.FC<IHeader> = ({routes}) => {
 
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static">
+            <AppBar component="nav">
                 <Toolbar>
                     <IconButton
                         size="large"
