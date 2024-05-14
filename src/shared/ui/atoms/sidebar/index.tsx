@@ -1,11 +1,7 @@
+import React from "react";
 import styled from "styled-components";
 import {Paper} from "@mui/material";
-
-interface ISidebar {
-    children: React.ReactNode,
-    header?: React.ReactNode,
-    footer?: React.ReactNode,
-}
+import {ISidebar} from "./type";
 
 export const Sidebar: React.FC<ISidebar> = ({
                                                 children,

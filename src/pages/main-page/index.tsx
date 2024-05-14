@@ -3,8 +3,8 @@ import {useGate, useUnit} from "effector-react";
 import {useForm} from "effector-forms";
 import {Button, TextField} from "@mui/material";
 import {$filmsListByName} from "entities/movie-controller-search-movie";
-import {Sidebar, Select, InfoCard} from "shared/ui";
-import {MainPageGate, $searchForm, $selectItems, onValidate} from "./model";
+import {Sidebar, Select, InfoCard, HintBox} from "shared/ui";
+import {MainPageGate, $searchForm, $selectItems, onValidate, SEARCH_BY_NAME} from "./model";
 
 
 export const MainPage = () => {
@@ -27,8 +27,7 @@ export const MainPage = () => {
         Найти
     </Button>
 
-    // @ts-ignore
-    const infoCards = films?.data?.docs?.map((film) => { //TODO Разобраться с типизацией
+    const infoCards = films?.docs?.map((film : any) => {
         return <InfoCard
             id={film.id}
             name={film.name}
@@ -45,7 +44,9 @@ export const MainPage = () => {
     return (
         <MainPageWrap>
             <div className='main-page-content-container'>
-                {infoCards}
+                {Boolean(films?.docs?.length)
+                    ? infoCards
+                    : <HintBox searchByFilm={fields.searchType.value === SEARCH_BY_NAME} searchResultLength={Boolean(films?.docs)}/>}
             </div>
             <div className='sidebar-container'>
                 <div className='sidebar'>
