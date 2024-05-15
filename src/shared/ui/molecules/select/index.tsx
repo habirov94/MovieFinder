@@ -6,11 +6,12 @@ import styled from "styled-components";
 export const Select: React.FC<ISelect> = ({
                                               items = [],
                                               value = '',
-                                              onChange = () => {}
+                                              onChange = () => {},
+                                              disabled
                                           }) => {
     return (
         <SelectWrap>
-            <MuiSelect value={value} className="mui-select" onChange={(data) => onChange(data.target.value)}>
+            <MuiSelect value={value} className="mui-select" disabled={disabled} onChange={(data) => onChange(data.target.value)}>
                 {
                     items.map((item) => {
                         return <MenuItem key={item.value} value={item.value}>{item.name}</MenuItem>

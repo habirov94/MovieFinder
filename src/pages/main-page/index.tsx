@@ -2,7 +2,7 @@ import styled from "styled-components";
 import {useGate, useUnit} from "effector-react";
 import {useForm} from "effector-forms";
 import {Button, TextField} from "@mui/material";
-import {$filmsListByName} from "entities/movie-controller-search-movie";
+import {$filmsListByName, fxMovieControllerSearchMovie} from "entities/movie-controller-search-movie";
 import {Sidebar, Select, InfoCard, HintBox} from "shared/ui";
 import {MainPageGate, $searchForm, $selectItems, onValidate, SEARCH_BY_NAME} from "./model";
 
@@ -10,12 +10,13 @@ import {MainPageGate, $searchForm, $selectItems, onValidate, SEARCH_BY_NAME} fro
 export const MainPage = () => {
     useGate(MainPageGate)
     const {fields} = useForm($searchForm)
-    const [selectItems, films] = useUnit([$selectItems, $filmsListByName])
+    const [selectItems, films, filmsLoading] = useUnit([$selectItems, $filmsListByName, fxMovieControllerSearchMovie.pending])
 
     const select = <Select
         items={selectItems}
         value={fields.searchType.value}
         onChange={fields.searchType.onChange}
+        disabled={filmsLoading}
     />
 
     const searchButton = <Button
@@ -23,6 +24,7 @@ export const MainPage = () => {
         variant="contained"
         size="large"
         onClick={() => onValidate()}
+        disabled={filmsLoading}
     >
         Найти
     </Button>
@@ -41,12 +43,16 @@ export const MainPage = () => {
         />
     })
 
+    const filmsBlock = Boolean(films?.docs?.length)
+        ? infoCards
+        : <HintBox searchByFilm={fields.searchType.value === SEARCH_BY_NAME} searchResultLength={Boolean(films?.docs)}/>
+
+    const filmsSkeleton = [...Array(3)].map(count => <InfoCard skeleton/>)
+
     return (
         <MainPageWrap>
             <div className='main-page-content-container'>
-                {Boolean(films?.docs?.length)
-                    ? infoCards
-                    : <HintBox searchByFilm={fields.searchType.value === SEARCH_BY_NAME} searchResultLength={Boolean(films?.docs)}/>}
+                {filmsLoading ? filmsSkeleton : filmsBlock}
             </div>
             <div className='sidebar-container'>
                 <div className='sidebar'>
@@ -62,6 +68,7 @@ export const MainPage = () => {
                             onChange={(e) => fields.query.onChange(e.target.value)}
                             error={!fields.query.isValid}
                             helperText={fields.query.errorText()}
+                            disabled={filmsLoading}
                         />
                     </Sidebar>
                 </div>

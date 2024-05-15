@@ -21,7 +21,7 @@ export const $searchForm = createForm({
                 {
                     name: "query",
                     validator: (value) => Boolean(value),
-                    errorText: "Введите название фильма"
+                    errorText: "Введите название фильма",
                 }
             ]
         }

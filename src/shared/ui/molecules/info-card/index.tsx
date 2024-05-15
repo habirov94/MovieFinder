@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import {Box, Chip, Typography} from "@mui/material";
+import {Box, Chip, Skeleton, Typography} from "@mui/material";
 import defaultPoster from "shared/images/default-poster.png"
 import {IInfoCard} from "./types";
 
@@ -14,7 +14,25 @@ export const InfoCard: React.FC<IInfoCard> = ({
                                                   ratingKp,
                                                   ratingImdb,
                                                   genres,
+                                                  skeleton
                                               }) => {
+
+    if (skeleton) {
+        return (
+            <InfoCardWrapper>
+                <Box className="info-item" key={id} sx={{marginRight: 0.5, my: 5}}>
+                    <Skeleton variant="rectangular" width={210} height={315} />
+                    <Box className="infocard-content" sx={{pr: 2}}>
+                        <Skeleton variant="rectangular" width={500} height={40} />
+                        <Skeleton variant="rectangular" width={150} height={30} />
+                        <Skeleton variant="rectangular" width={200} height={30} />
+                        <Skeleton variant="rectangular" width={800} height={100} />
+                    </Box>
+                </Box>
+            </InfoCardWrapper>
+        )
+    }
+
     return (
         <InfoCardWrapper>
             <Box className="info-item" key={id} sx={{marginRight: 0.5, my: 5}}>
@@ -37,7 +55,7 @@ export const InfoCard: React.FC<IInfoCard> = ({
                         {country}, {year} год
                     </Typography>
                     <div className="raitings-container">
-                        {genres.map(genre => <Chip size="small" label={genre.name}/>)}
+                        {genres?.map(genre => <Chip size="small" label={genre.name}/>)}
                     </div>
                     <Typography display="block" variant="caption" color="text.secondary">
                         {description}
