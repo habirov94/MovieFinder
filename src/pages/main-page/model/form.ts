@@ -20,11 +20,25 @@ export const $searchForm = createForm({
             rules: [
                 {
                     name: "query",
-                    validator: (value) => Boolean(value),
+                    validator: (value, formValues) => {
+                        return Boolean(value) || (formValues.searchType !== SEARCH_BY_NAME)
+                    },
                     errorText: "Введите название фильма",
                 }
             ]
-        }
+        },
+        ratingKp: {
+            init: null,
+        },
+        year: {
+            init: '',
+        },
+        genresName: {
+            init: '',
+        },
+        countriesName: {
+            init: '',
+        },
     }
 })
 

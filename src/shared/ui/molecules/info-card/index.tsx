@@ -55,7 +55,7 @@ export const InfoCard: React.FC<IInfoCard> = ({
                         {country}, {year} год
                     </Typography>
                     <div className="raitings-container">
-                        {genres?.map(genre => <Chip size="small" label={genre.name}/>)}
+                        {genres?.map(genre => <Chip size="small" key={genre.name} label={genre.name}/>)}
                     </div>
                     <Typography display="block" variant="caption" color="text.secondary">
                         {description}

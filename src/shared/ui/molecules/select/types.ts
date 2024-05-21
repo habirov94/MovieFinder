@@ -1,11 +1,12 @@
 export interface ISelect {
-    items?: Items[];
+    items?: ISelectItems[];
     value: string;
     onChange?: (arg1:string) => {};
     disabled: boolean;
+    label?: string;
 }
 
-interface Items {
+export interface ISelectItems {
     name: string;
     value: string;
 }
