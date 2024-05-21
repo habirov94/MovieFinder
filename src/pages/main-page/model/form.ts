@@ -1,6 +1,6 @@
 import {createEvent, createStore, sample} from "effector";
 import {createForm} from "effector-forms";
-import {SEARCH_BY_NAME, searchSelectItemsNames} from "./constants";
+import {formErrorTexts, SEARCH_BY_NAME, searchSelectItemsNames} from "./constants";
 
 export const onValidate = createEvent('Валидировать форму')
 
@@ -23,7 +23,7 @@ export const $searchForm = createForm({
                     validator: (value, formValues) => {
                         return Boolean(value) || (formValues.searchType !== SEARCH_BY_NAME)
                     },
-                    errorText: "Введите название фильма",
+                    errorText: formErrorTexts.queryErrorText,
                 }
             ]
         },
@@ -32,6 +32,23 @@ export const $searchForm = createForm({
         },
         year: {
             init: '',
+            rules: [
+                {
+                    name: "year",
+                    validator: (value, formValues) => {
+                        return Boolean(value) || (formValues.searchType === SEARCH_BY_NAME)
+                    },
+                    errorText: formErrorTexts.yearEmptyErrorText,
+                },
+                {
+                    name: "year",
+                    validator: (value, formValues) => {
+                        const currentYear = new Date().getFullYear();
+                        return (Number(value) >= 1895 && Number(value) <= currentYear) || (formValues.searchType === SEARCH_BY_NAME)
+                    },
+                    errorText: formErrorTexts.yearDateErrorText,
+                }
+            ]
         },
         genresName: {
             init: '',

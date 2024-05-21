@@ -19,8 +19,6 @@ export const SearchByParameterInputs = () => {
         $filmsCountry
     ])
 
-    console.log(genres)
-
     return (
         <SearchByParameterInputsWrap>
             <TextField
