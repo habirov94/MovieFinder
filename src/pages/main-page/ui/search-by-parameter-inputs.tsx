@@ -3,7 +3,7 @@ import {useForm} from "effector-forms";
 import {useUnit} from "effector-react";
 import {TextField} from "@mui/material";
 import {fxMovieControllerFindManyByQuery} from "entities/movie-controller- find-many-by-query";
-import {Select} from "shared/ui";
+import {Select, Slider} from "shared/ui";
 import {$filmsCountry, $filmsGenres, $searchForm} from "../model";
 
 
@@ -50,6 +50,16 @@ export const SearchByParameterInputs = () => {
                 onChange={fields.countriesName.onChange}
                 disabled={filmsLoading}
                 label="Выберите страну производства фильма"
+            />
+
+            <Slider
+                value={fields.ratingKp.value}
+                onChange={fields.ratingKp.onChange}
+                sliderLabel='Рейтинг КП'
+                step={1}
+                minValue={0}
+                maxValue={10}
+                disabled={filmsLoading}
             />
         </SearchByParameterInputsWrap>
     )

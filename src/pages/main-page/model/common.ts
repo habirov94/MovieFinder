@@ -1,5 +1,5 @@
 import {createGate} from "effector-react";
-import {sample} from "effector";
+import {createEvent, sample} from "effector";
 import {condition} from "patronum";
 import {PossibleValueDto} from "generate/Api";
 import {fxMovieControllerSearchMovie} from "entities/movie-controller-search-movie";
@@ -25,9 +25,17 @@ export const $filmsCountry = countryFactory.$valuesByFieldName.map(
     )
 )
 
+export const getMovies = createEvent('Запрашивает фильмы')
+
+sample({
+    clock: $searchForm.formValidated,
+    target: getMovies,
+    fn: (data) => ({...data, ratingKp: data.ratingKp.join('-')})
+})
+
 condition({
     //@ts-ignore
-    source: $searchForm.formValidated,
+    source: getMovies,
     if: ({searchType}) => searchType === SEARCH_BY_NAME,
     then: fxMovieControllerSearchMovie,
     else: fxMovieControllerFindManyByQuery,

@@ -28,7 +28,7 @@ export const $searchForm = createForm({
             ]
         },
         ratingKp: {
-            init: null,
+            init: [0, 10],
         },
         year: {
             init: '',

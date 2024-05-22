@@ -1,35 +1,39 @@
 import React from "react";
 import styled from "styled-components";
-import {MenuItem, Select as MuiSelect} from "@mui/material";
+import {FormControl, InputLabel, MenuItem, Select as MuiSelect} from "@mui/material";
 import {ISelect} from "shared/ui/molecules/select/types";
 
 export const Select: React.FC<ISelect> = ({
                                               items = [],
-                                              value = '',
+                                              value,
                                               onChange = () => {},
                                               disabled,
                                               label
                                           }) => {
     return (
         <SelectWrap>
-            <MuiSelect
-                value={value}
-                className="mui-select"
-                disabled={disabled}
-                onChange={(data) => onChange(data.target.value)}
-                label={label}
-            >
-                {
-                    items.map((item) => {
-                        return <MenuItem key={item.value} value={item.value}>{item.name}</MenuItem>
-                    })
-                }
-            </MuiSelect>
+            <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">{label}</InputLabel>
+                <MuiSelect
+                    labelId="demo-simple-select-label"
+                    value={value}
+                    className="mui-select"
+                    disabled={disabled}
+                    onChange={(data) => onChange(data.target.value)}
+                    label={label}
+                >
+                    {
+                        items.map((item) => {
+                            return <MenuItem key={item.value} value={item.value}>{item.name}</MenuItem>
+                        })
+                    }
+                </MuiSelect>
+            </FormControl>
         </SelectWrap>
     )
 }
 
-const SelectWrap = styled.div `
+const SelectWrap = styled.div`
     .mui-select {
         width: 100%;
     }
