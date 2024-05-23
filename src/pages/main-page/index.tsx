@@ -2,12 +2,18 @@ import styled from "styled-components";
 import {useGate, useUnit} from "effector-react";
 import {useForm} from "effector-forms";
 import {Button, TextField} from "@mui/material";
-import {$filmsListByName, fxMovieControllerSearchMovie} from "entities/movie-controller-search-movie";
-import {$filmsListByQuery} from "entities/movie-controller- find-many-by-query";
+import {fxMovieControllerSearchMovie} from "entities/movie-controller-search-movie";
 import {Sidebar, Select, InfoCard, HintBox} from "shared/ui";
-import {MainPageGate, $searchForm, $selectItems, onValidate, SEARCH_BY_NAME} from "./model";
+import {
+    MainPageGate,
+    $searchForm,
+    $selectItems,
+    onValidate,
+    SEARCH_BY_NAME,
+    $sortedFilmsListByName,
+    $sortedFilmsListByQuery
+} from "./model";
 import {SearchByParameterInputs} from "./ui/search-by-parameter-inputs";
-
 
 export const MainPage = () => {
     useGate(MainPageGate)
@@ -19,8 +25,8 @@ export const MainPage = () => {
         filmsLoading
     ] = useUnit([
         $selectItems,
-        $filmsListByName,
-        $filmsListByQuery,
+        $sortedFilmsListByName,
+        $sortedFilmsListByQuery,
         fxMovieControllerSearchMovie.pending
     ])
 
@@ -45,7 +51,7 @@ export const MainPage = () => {
         Найти
     </Button>
 
-    const infoCards = films?.docs?.map((film : any) => {
+    const infoCards = films?.map((film : any) => {
         return <InfoCard
             key={film.id}
             id={film.id}
@@ -71,9 +77,9 @@ export const MainPage = () => {
         disabled={filmsLoading}
     />
 
-    const filmsBlock = Boolean(films?.docs?.length)
+    const filmsBlock = Boolean(films?.length)
         ? infoCards
-        : <HintBox searchByFilm={fields.searchType.value === SEARCH_BY_NAME} searchResultLength={Boolean(films?.docs)}/>
+        : <HintBox searchByFilm={fields.searchType.value === SEARCH_BY_NAME} searchResultLength={Boolean(films)}/>
 
     const filmsSkeleton = [...Array(3)].map((count, index) => <InfoCard key={index} skeleton/>)
 

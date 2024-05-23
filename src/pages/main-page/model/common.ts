@@ -2,30 +2,40 @@ import {createGate} from "effector-react";
 import {createEvent, sample} from "effector";
 import {condition} from "patronum";
 import {PossibleValueDto} from "generate/Api";
-import {fxMovieControllerSearchMovie} from "entities/movie-controller-search-movie";
-import {fxMovieControllerFindManyByQuery} from "entities/movie-controller- find-many-by-query";
+import {$filmsListByName, fxMovieControllerSearchMovie} from "entities/movie-controller-search-movie";
+import {$filmsListByQuery, fxMovieControllerFindManyByQuery} from "entities/movie-controller- find-many-by-query";
 import {getPossibleValuesByFieldNameFactory} from "entities/movie-controller-get-possible-values-by-field-name";
 import {SEARCH_BY_NAME, SEARCH_BY_PARAMETERS} from "./constants";
 import {$searchForm} from "./form";
+import {getSortedArray} from "./lib";
+
+export const MainPageGate = createGate()
+
+export const getMovies = createEvent('Запрашивает фильмы')
 
 export const genresFactory = getPossibleValuesByFieldNameFactory()
 export const countryFactory = getPossibleValuesByFieldNameFactory()
-
-export const MainPageGate = createGate()
 
 export const $filmsGenres = genresFactory.$valuesByFieldName.map(
     (genres) => genres?.map(
         ({name = ""}) => ({name, value: name})
     )
 )
-
 export const $filmsCountry = countryFactory.$valuesByFieldName.map(
     (countries) => countries?.map(
         ({name = ""}) => ({name, value: name})
     )
 )
 
-export const getMovies = createEvent('Запрашивает фильмы')
+export const $sortedFilmsListByName = $filmsListByName.map((films) => {
+    if (!films?.docs) return null
+    return getSortedArray(films?.docs)
+})
+
+export const $sortedFilmsListByQuery = $filmsListByQuery.map((films) => {
+    if (!films?.docs) return null
+    return getSortedArray(films?.docs)
+})
 
 sample({
     clock: $searchForm.formValidated,
