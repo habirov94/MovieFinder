@@ -13,11 +13,11 @@ export const fxMovieControllerFindManyByQuery = createEffect<any, MovieDocsRespo
     }) => {
     return V14service.movieControllerFindManyByQueryV14(
         {
-            //@ts-ignore
+            //@ts-expect-error
             "rating.kp": ratingKp,
             year,
-            genresName,
-            countriesName
+            "genres.name": genresName,
+            "countries.name": countriesName
         },
         {
             headers: apiKey

@@ -15,13 +15,13 @@ export const MainPageGate = createGate()
 
 export const $filmsGenres = genresFactory.$valuesByFieldName.map(
     (genres) => genres?.map(
-        ({name = "", slug: value = ""}) => ({name, value})
+        ({name = ""}) => ({name, value: name})
     )
 )
 
 export const $filmsCountry = countryFactory.$valuesByFieldName.map(
     (countries) => countries?.map(
-        ({name = "", slug: value = ""}) => ({name, value})
+        ({name = ""}) => ({name, value: name})
     )
 )
 
