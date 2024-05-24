@@ -14,7 +14,8 @@ export const InfoCard: React.FC<IInfoCard> = ({
                                                   ratingKp,
                                                   ratingImdb,
                                                   genres,
-                                                  skeleton
+                                                  skeleton,
+                                                  onClick
                                               }) => {
 
     if (skeleton) {
@@ -34,7 +35,7 @@ export const InfoCard: React.FC<IInfoCard> = ({
     }
 
     return (
-        <InfoCardWrapper>
+        <InfoCardWrapper onClick={() => onClick && onClick(id)}>
             <Box className="info-item" key={id} sx={{marginRight: 0.5, my: 5}}>
                 <img
                     style={{width: 210, height:315}}
@@ -85,7 +86,7 @@ const InfoCardWrapper = styled.div`
         margin: 0;
         border: 1px solid rgba(34, 60, 80, 0.2);
         border-radius: 5px;
-        box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
+        box-shadow: 4px 4px 8px 0 rgba(34, 60, 80, 0.2);
     }
 
     .info-item:hover {

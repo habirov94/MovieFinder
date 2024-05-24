@@ -9,6 +9,7 @@ export interface IInfoCard {
     ratingImdb?: number;
     genres?: Genres[];
     skeleton?: boolean;
+    onClick?: (id?: number) => void;
 }
 interface Genres {
     name: string;

@@ -11,7 +11,8 @@ import {
     onValidate,
     SEARCH_BY_NAME,
     $sortedFilmsListByName,
-    $sortedFilmsListByQuery
+    $sortedFilmsListByQuery,
+    setModalContent
 } from "./model";
 import {SearchByParameterInputs} from "./ui/search-by-parameter-inputs";
 
@@ -63,6 +64,7 @@ export const MainPage = () => {
             ratingKp={film.rating.kp}
             ratingImdb={film.rating.imdb}
             genres={film.genres}
+            onClick={setModalContent}
         />
     })
 
