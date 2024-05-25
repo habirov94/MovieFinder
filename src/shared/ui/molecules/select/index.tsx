@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import {FormControl, InputLabel, MenuItem, Select as MuiSelect} from "@mui/material";
+import {FormControl, InputLabel, MenuItem, Select as MuiSelect, Skeleton} from "@mui/material";
 import {ISelect} from "shared/ui/molecules/select/types";
 
 export const Select: React.FC<ISelect> = ({
@@ -8,8 +8,13 @@ export const Select: React.FC<ISelect> = ({
                                               value,
                                               onChange = () => {},
                                               disabled,
-                                              label
+                                              label,
+                                              skeleton
                                           }) => {
+    if (skeleton) {
+        return <Skeleton variant="rectangular" width='100%' height={56} />
+    }
+
     return (
         <SelectWrap>
             <FormControl fullWidth>

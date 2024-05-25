@@ -4,7 +4,7 @@ import {useUnit} from "effector-react";
 import {TextField} from "@mui/material";
 import {fxMovieControllerFindManyByQuery} from "entities/movie-controller- find-many-by-query";
 import {Select, Slider} from "shared/ui";
-import {$filmsCountry, $filmsGenres, $searchForm} from "../model";
+import {$filmsCountry, $filmsGenres, $searchForm, countryFactory, genresFactory} from "../model";
 
 
 export const SearchByParameterInputs = () => {
@@ -12,11 +12,15 @@ export const SearchByParameterInputs = () => {
     const [
         filmsLoading,
         genres,
-        countries
+        genresLoading,
+        countries,
+        countriesLoading
     ] = useUnit([
         fxMovieControllerFindManyByQuery.pending,
         $filmsGenres,
-        $filmsCountry
+        genresFactory.fxMovieControllerGetPossibleValuesByFieldName.pending,
+        $filmsCountry,
+        countryFactory.fxMovieControllerGetPossibleValuesByFieldName.pending
     ])
 
     return (
@@ -41,6 +45,7 @@ export const SearchByParameterInputs = () => {
                 onChange={fields.genresName.onChange}
                 disabled={filmsLoading}
                 label="Выберите жанр фильма"
+                skeleton={genresLoading}
             />
 
             <Select
@@ -50,6 +55,7 @@ export const SearchByParameterInputs = () => {
                 onChange={fields.countriesName.onChange}
                 disabled={filmsLoading}
                 label="Выберите страну производства фильма"
+                skeleton={countriesLoading}
             />
 
             <Slider

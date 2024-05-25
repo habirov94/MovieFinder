@@ -4,6 +4,7 @@ export interface ISelect {
     onChange?: (arg1:string) => {};
     disabled: boolean;
     label?: string;
+    skeleton?: boolean;
 }
 
 export interface ISelectItems {
