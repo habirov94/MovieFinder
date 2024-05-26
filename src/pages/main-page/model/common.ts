@@ -2,7 +2,6 @@ import {createGate} from "effector-react";
 import {createEvent, sample} from "effector";
 import {condition} from "patronum";
 import {PossibleValueDto} from "generate/Api";
-import {addModal} from "features/global-modal/model";
 import {$filmsListByName, fxMovieControllerSearchMovie} from "entities/movie-controller-search-movie";
 import {$filmsListByQuery, fxMovieControllerFindManyByQuery} from "entities/movie-controller- find-many-by-query";
 import {getPossibleValuesByFieldNameFactory} from "entities/movie-controller-get-possible-values-by-field-name";
@@ -13,8 +12,6 @@ import {getSortedArray} from "./lib";
 export const MainPageGate = createGate()
 
 export const getMovies = createEvent('Запрашивает фильмы')
-
-export const setModalContent = createEvent<number>('Отправлет данные для модалки')
 
 export const genresFactory = getPossibleValuesByFieldNameFactory()
 export const countryFactory = getPossibleValuesByFieldNameFactory()
@@ -74,10 +71,4 @@ sample({
         return searchTypeValue === SEARCH_BY_PARAMETERS && !Boolean(countryData)
     },
     fn: () => ({field: "countries.name"})
-})
-
-sample({
-    clock: setModalContent,
-    fn: () => ({content: "ghbdtn"}), //TODO Временно, нужно доработать
-    target: addModal
 })

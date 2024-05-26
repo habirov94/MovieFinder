@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import {Box, Chip, Skeleton, Typography} from "@mui/material";
-import defaultPoster from "shared/images/default-poster.png"
+import {ImgBox} from "shared/ui/atoms/img-box";
 import {IInfoCard} from "./types";
 
 export const InfoCard: React.FC<IInfoCard> = ({
@@ -37,11 +37,7 @@ export const InfoCard: React.FC<IInfoCard> = ({
     return (
         <InfoCardWrapper onClick={() => onClick && onClick(id)}>
             <Box className="info-item" key={id} sx={{marginRight: 0.5, my: 5}}>
-                <img
-                    style={{width: 210, height:315}}
-                    alt={name}
-                    src={posterUrl ?? defaultPoster}
-                />
+                <ImgBox alt={name} src={posterUrl}/>
                 <Box className="infocard-content" sx={{pr: 2}}>
                     <div className="infocard-header">
                         <Typography variant="h4">
@@ -73,10 +69,6 @@ const InfoCardWrapper = styled.div`
 
     .grid-container {
         gap: 1rem;
-    }
-
-    img {
-        border-radius: 5px;
     }
 
     .info-item {

@@ -5,10 +5,7 @@ export const addModal = createEvent<ISetModalData>("передает данны�
 
 export const deleteModal = createEvent<number>("Удаляет модалку")
 
-export const $modalData = createStore<IModalData[]>([{
-    key: 123,
-    content: "privet"
-}])
+export const $modalData = createStore<IModalData[]>([])
 
 sample({
     source: $modalData,
