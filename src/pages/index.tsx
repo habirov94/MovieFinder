@@ -1,7 +1,7 @@
 import React from "react";
 import {IRoutes} from "shared/types";
 import {MainPage} from "./main-page";
-import {personsPage} from "./persons-page";
+import {PersonsPage} from "./persons-page";
 
 export const routes:IRoutes[] = [
     {
@@ -20,6 +20,6 @@ export const routes:IRoutes[] = [
         name: "Актеры",
         path: "/persons",
         isVisible: true,
-        component: React.createElement(personsPage)
+        component: React.createElement(PersonsPage)
     },
 ]

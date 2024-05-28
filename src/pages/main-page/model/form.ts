@@ -62,5 +62,5 @@ export const $searchForm = createForm({
 sample({
     // @ts-ignore
     clock: onValidate,
-    target: $searchForm.validate
+    target: $searchForm.validate,
 })
