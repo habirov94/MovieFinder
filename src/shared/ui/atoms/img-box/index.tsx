@@ -12,7 +12,7 @@ export const ImgBox: React.FC<IImgBox> = ({
         <img
             style={{width: width, height: height, borderRadius: 5}}
             alt={alt}
-            src={src ?? defaultPoster}
+            src={src || defaultPoster}
         />
     )
 }

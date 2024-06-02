@@ -2,10 +2,9 @@ import styled from "styled-components";
 import {useGate, useUnit} from "effector-react";
 import {useForm} from "effector-forms";
 import {Button, TextField} from "@mui/material";
-import {fxPersonControllerSearchPerson} from "entities/person-controller-search-person";
-import {Select, Sidebar} from "shared/ui";
+import {$valuesBySearchPerson, fxPersonControllerSearchPerson} from "entities/person-controller-search-person";
+import {PersonInfoCard, Select, Sidebar} from "shared/ui";
 import {$personSearchForm, $selectItems, onValidate, PersonsPageGate} from "./model";
-
 
 export const PersonsPage = () => {
 
@@ -13,7 +12,7 @@ export const PersonsPage = () => {
 
     const {fields} = useForm($personSearchForm)
 
-    const [selectItems, personLoading] = useUnit([$selectItems, fxPersonControllerSearchPerson.pending])
+    const [persons, selectItems, personLoading] = useUnit([$valuesBySearchPerson, $selectItems, fxPersonControllerSearchPerson.pending])
 
     const select = <Select
         items={selectItems}
@@ -32,6 +31,21 @@ export const PersonsPage = () => {
         Найти
     </Button>
 
+    const infoCards = persons?.docs?.map((person : any) => {
+        return <PersonInfoCard
+            id={person.id}
+            age={person.age}
+            name={person.name}
+            birthday={person.birthday}
+            death={person.death}
+            growth={person.growth}
+            enName={person.enName}
+            photo={person.photo}
+            sex={person.sex}
+            // onClick={setModalContent} //TODO Сделать модалку
+        />
+    })
+
     const filmNameTextField = <TextField
         className="name-text-field"
         id="outlined-basic"
@@ -45,6 +59,9 @@ export const PersonsPage = () => {
 
     return (
         <PersonPageWrap>
+            <div className='main-page-content-container'>
+                {infoCards}
+            </div>
             <div className='sidebar-container'>
                 <div className='sidebar'>
                     <Sidebar
