@@ -4,7 +4,7 @@ import {useForm} from "effector-forms";
 import {Button, TextField} from "@mui/material";
 import {$valuesBySearchPerson, fxPersonControllerSearchPerson} from "entities/person-controller-search-person";
 import {PersonInfoCard, Select, Sidebar} from "shared/ui";
-import {$personSearchForm, $selectItems, onValidate, PersonsPageGate} from "./model";
+import {$personSearchForm, $selectItems, onValidate, PersonsPageGate, setModalContent} from "./model";
 
 export const PersonsPage = () => {
 
@@ -42,7 +42,7 @@ export const PersonsPage = () => {
             enName={person.enName}
             photo={person.photo}
             sex={person.sex}
-            // onClick={setModalContent} //TODO Сделать модалку
+            onClick={setModalContent}
         />
     })
 

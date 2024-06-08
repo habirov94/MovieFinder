@@ -48,12 +48,12 @@ export const PersonInfoCard: React.FC<IPersonInfoCard> = ({
                         Возраст: {age}
                     </Typography>
                     <Typography gutterBottom variant="body2">
-                        Дата Рождения: {dateFormatter(birthday)}
+                        Дата Рождения: {birthday ? dateFormatter(new Date(birthday)) : "Нет данных"}
                     </Typography>
                     {
                         Boolean(death?.length) &&
                         <Typography gutterBottom variant="body2">
-                            Дата смерти: {dateFormatter(death)}
+                            Дата смерти: {death ? dateFormatter(new Date(death)) : "Нет данных"}
                         </Typography>
                     }
                     <Typography gutterBottom variant="body2">
