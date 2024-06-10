@@ -13,3 +13,20 @@ export function dateFormatter(date: Date) {
     };
     return date.toLocaleDateString('ru-RU', options);
 }
+
+/**
+ * Удаляет из объекта все элементы с пустыми значениями
+ *
+ * @param {[key: string]: any} payload - изменяемый объект
+ * @returns {[key: string]: any} - измененный объект, без элементов с пустыми значениями
+ */
+
+export const removeEmptyValues = (payload: {[key: string]: any}) => {
+    const newPayload: {[key: string]: any} = {}
+    Object.keys(payload).forEach((el) => {
+        if (payload[el] !== '') {
+            newPayload[el] = payload[el];
+        }
+    }, {});
+    return newPayload
+}

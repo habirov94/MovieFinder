@@ -44,7 +44,7 @@ sample({
 })
 
 condition({
-    //@ts-ignore
+    //@ts-expect-error
     source: getMovies,
     if: ({searchType}) => searchType === SEARCH_BY_NAME,
     then: fxMovieControllerSearchMovie,
@@ -52,7 +52,7 @@ condition({
 })
 
 sample({
-    //@ts-ignore
+    //@ts-expect-error
     source: genresFactory.$valuesByFieldName,
     clock: $searchForm.fields.searchType.changed,
     target: genresFactory.fxMovieControllerGetPossibleValuesByFieldName,
@@ -63,7 +63,7 @@ sample({
 })
 
 sample({
-    //@ts-ignore
+    //@ts-expect-error
     source: countryFactory.$valuesByFieldName,
     clock: $searchForm.fields.searchType.changed,
     target: countryFactory.fxMovieControllerGetPossibleValuesByFieldName,

@@ -24,12 +24,24 @@ export const $personSearchForm = createForm({
             rules: [
                 {
                     name: "query",
-                    validator: (value) => {
-                        return Boolean(value)
+                    validator: (value, formValues) => {
+                        return Boolean(value) || (formValues.searchType !== SEARCH_PERSON_BY_NAME)
                     },
                     errorText: personFormErrorTexts.queryErrorText,
                 }
             ]
+        },
+        sex: {
+            init: '',
+        },
+        professionValue: {
+            init: '',
+        },
+        birthday: {
+            init: '',
+        },
+        age: {
+            init: '',
         },
     }
 })

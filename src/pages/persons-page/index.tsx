@@ -3,8 +3,17 @@ import {useGate, useUnit} from "effector-react";
 import {useForm} from "effector-forms";
 import {Button, TextField} from "@mui/material";
 import {$valuesBySearchPerson, fxPersonControllerSearchPerson} from "entities/person-controller-search-person";
-import {PersonInfoCard, Select, Sidebar} from "shared/ui";
-import {$personSearchForm, $selectItems, onValidate, PersonsPageGate, setModalContent} from "./model";
+import {$personListByQuery} from "entities/person-controller-find-many-by-query";
+import {HintBox, PersonInfoCard, Select, Sidebar} from "shared/ui";
+import {
+    $personSearchForm,
+    $selectItems,
+    onValidate,
+    PersonsPageGate,
+    SEARCH_PERSON_BY_NAME,
+    setModalContent
+} from "./model";
+import {PersonsSearchByParameterInputs} from "./ui/persons-search-by-parameter-inputs";
 
 export const PersonsPage = () => {
 
@@ -12,7 +21,20 @@ export const PersonsPage = () => {
 
     const {fields} = useForm($personSearchForm)
 
-    const [persons, selectItems, personLoading] = useUnit([$valuesBySearchPerson, $selectItems, fxPersonControllerSearchPerson.pending])
+    const [
+        personsByName,
+        personsByQuery,
+        selectItems,
+        personLoading
+    ] = useUnit([
+        $valuesBySearchPerson,
+        $personListByQuery,
+        $selectItems,
+        fxPersonControllerSearchPerson.pending])
+
+    const isSearchByName = fields.searchType.value === SEARCH_PERSON_BY_NAME
+
+    const persons = isSearchByName ? personsByName : personsByQuery
 
     const select = <Select
         items={selectItems}
@@ -43,6 +65,7 @@ export const PersonsPage = () => {
             photo={person.photo}
             sex={person.sex}
             onClick={setModalContent}
+            skeleton={personLoading}
         />
     })
 
@@ -57,10 +80,16 @@ export const PersonsPage = () => {
         disabled={false}
     />
 
+    const personsBlock = Boolean(persons?.docs.length)
+        ? infoCards
+        : <HintBox searchByFilm={fields.searchType.value === SEARCH_PERSON_BY_NAME} searchResultLength={Boolean(persons?.docs)}/>
+
+    const personSkeleton = [...Array(3)].map((count, index) => <PersonInfoCard key={index} skeleton/>)
+
     return (
         <PersonPageWrap>
             <div className='main-page-content-container'>
-                {infoCards}
+                {personLoading ? personSkeleton : personsBlock}
             </div>
             <div className='sidebar-container'>
                 <div className='sidebar'>
@@ -68,7 +97,7 @@ export const PersonsPage = () => {
                         header={select}
                         footer={searchButton}
                     >
-                        {filmNameTextField}
+                        {isSearchByName ? filmNameTextField : <PersonsSearchByParameterInputs />}
                     </Sidebar>
                 </div>
             </div>
