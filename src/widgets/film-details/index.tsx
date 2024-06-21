@@ -8,7 +8,8 @@ import {FilmDetailsGate} from "./model";
 import {IFilmDetails} from "./type";
 
 export const FilmDetails: React.FC<IFilmDetails> = ({
-                                                        filmId
+                                                        filmId,
+                                                        onClick
                                                     }) => {
     useGate(FilmDetailsGate, filmId)
 
@@ -47,7 +48,7 @@ export const FilmDetails: React.FC<IFilmDetails> = ({
                 }>
                     {filmDetails?.persons?.slice(0, 6).map((person) => {
                         return (
-                            <ListItem>
+                            <ListItem onClick={() => onClick && onClick(person.id)}>
                                 <ListItemAvatar>
                                     <ImgBox src={person.photo} height={45} width={30}/>
                                 </ListItemAvatar>
@@ -82,6 +83,7 @@ export const FilmDetails: React.FC<IFilmDetails> = ({
 const FilmDetailsWrapper = styled.div`
     display: flex;
     flex-direction: column;
+    min-width: 800px;
     gap: 1rem;
     
     .basic-information-box {

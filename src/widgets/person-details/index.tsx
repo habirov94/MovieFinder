@@ -9,8 +9,9 @@ import {$filteredPostersUrl, PersonDetailsGate} from "./model";
 import {IPersonDetails} from "./type";
 
 export const PersonDetails: React.FC<IPersonDetails> = ({
-                                                            personId
-                                                        }) => {
+                                                            personId,
+                                                            onClick
+}) => {
     useGate(PersonDetailsGate, personId)
 
     const [personDetails, personDetailLoading, postersUrl] = useUnit([$personDetails, fxPersonControllerFindOne.pending, $filteredPostersUrl])
@@ -75,7 +76,7 @@ export const PersonDetails: React.FC<IPersonDetails> = ({
                     }>
                         {personDetails?.movies?.slice(0, 6).map((movie) => {
                             return (
-                                <ListItem>
+                                <ListItem onClick={() => onClick && onClick(movie.id)}>
                                     <ListItemAvatar>
                                         <ImgBox src={postersUrl?.[movie.id]} height={45} width={30}/>
                                     </ListItemAvatar>
@@ -93,6 +94,7 @@ export const PersonDetails: React.FC<IPersonDetails> = ({
 const PersonDetailsWrapper = styled.div`
     display: flex;
     flex-direction: column;
+    min-width: 800px;
     gap: 1rem;
 
     .basic-information-box {

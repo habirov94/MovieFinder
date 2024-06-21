@@ -11,6 +11,10 @@ sample({
     source: $modalData,
     clock: addModal,
     fn: (data, content) => {
+        if (data.length >= 4) {
+            data.shift()
+            return [...data, {...content, key: Number(new Date())}]
+        }
         return [...data, {...content, key: Number(new Date())}]
     },
     target: $modalData,
@@ -24,3 +28,5 @@ sample({
     },
     target: $modalData,
 })
+
+$modalData.watch(console.log)
