@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import {useGate, useUnit} from "effector-react";
-import {Box, List, ListItem, ListItemText, ListSubheader, Skeleton, Typography} from "@mui/material";
+import {Box, List, ListItem, ListItemAvatar, ListItemText, ListSubheader, Skeleton, Typography} from "@mui/material";
 import {$personDetails, fxPersonControllerFindOne} from "entities/person-controller-find-one";
 import {ImgBox} from "shared/ui";
 import {dateFormatter} from "shared/lib";
-import {PersonDetailsGate} from "./model";
+import {$filteredPostersUrl, PersonDetailsGate} from "./model";
 import {IPersonDetails} from "./type";
 
 export const PersonDetails: React.FC<IPersonDetails> = ({
@@ -13,7 +13,7 @@ export const PersonDetails: React.FC<IPersonDetails> = ({
                                                         }) => {
     useGate(PersonDetailsGate, personId)
 
-    const [personDetails, personDetailLoading] = useUnit([$personDetails, fxPersonControllerFindOne.pending])
+    const [personDetails, personDetailLoading, postersUrl] = useUnit([$personDetails, fxPersonControllerFindOne.pending, $filteredPostersUrl])
 
     if (personDetailLoading) {
         return (
@@ -76,6 +76,9 @@ export const PersonDetails: React.FC<IPersonDetails> = ({
                         {personDetails?.movies?.slice(0, 6).map((movie) => {
                             return (
                                 <ListItem>
+                                    <ListItemAvatar>
+                                        <ImgBox src={postersUrl?.[movie.id]} height={45} width={30}/>
+                                    </ListItemAvatar>
                                     <ListItemText primary={movie.name ?? movie.alternativeName}
                                                   secondary={movie.description}/>
                                 </ListItem>
