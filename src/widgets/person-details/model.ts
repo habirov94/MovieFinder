@@ -1,10 +1,12 @@
 import {createGate} from "effector-react";
 import {createStore, sample} from "effector";
-import {fxPersonControllerFindOne} from "entities/person-controller-find-one";
+import {$personDetails, fxPersonControllerFindOne} from "entities/person-controller-find-one";
 import {fxImageControllerFindMany} from "entities/image-controller-find-many";
+import {IPerson} from "./type";
 
 export const PersonDetailsGate = createGate<number>()
 export const $filteredPostersUrl = createStore<null>(null)
+export const $personInfo = createStore<IPerson>({})
 
 sample({
     clock: PersonDetailsGate.open,
@@ -29,4 +31,24 @@ sample({
         }, {})
     },
     target: $filteredPostersUrl
+})
+
+sample({
+    source: $personInfo,
+    clock: $personDetails.updates,
+    fn: (personsInfo, personDetail) => {
+        return personDetail ? {...personsInfo, [personDetail.id]: {...personDetail}} : personsInfo
+    },
+    target: $personInfo
+})
+
+sample({
+    source: $personInfo,
+    clock: PersonDetailsGate.close,
+    fn: (personsInfo, personId) => {
+        let newInfo = {...personsInfo}
+        delete newInfo[personId]
+        return newInfo
+    },
+    target: $personInfo
 })

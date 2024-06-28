@@ -2,10 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import {useGate, useUnit} from "effector-react";
 import {Box, List, ListItem, ListItemAvatar, ListItemText, ListSubheader, Skeleton, Typography} from "@mui/material";
-import {$personDetails, fxPersonControllerFindOne} from "entities/person-controller-find-one";
+import {fxPersonControllerFindOne} from "entities/person-controller-find-one";
+import {Person} from "generate/Api";
 import {ImgBox} from "shared/ui";
 import {dateFormatter} from "shared/lib";
-import {$filteredPostersUrl, PersonDetailsGate} from "./model";
+import {$filteredPostersUrl, $personInfo, PersonDetailsGate} from "./model";
 import {IPersonDetails} from "./type";
 
 export const PersonDetails: React.FC<IPersonDetails> = ({
@@ -14,7 +15,8 @@ export const PersonDetails: React.FC<IPersonDetails> = ({
 }) => {
     useGate(PersonDetailsGate, personId)
 
-    const [personDetails, personDetailLoading, postersUrl] = useUnit([$personDetails, fxPersonControllerFindOne.pending, $filteredPostersUrl])
+    const [personDetails, personDetailLoading, postersUrl] = useUnit([$personInfo, fxPersonControllerFindOne.pending, $filteredPostersUrl])
+    const person: Person = personDetails[personId]
 
     if (personDetailLoading) {
         return (
@@ -36,31 +38,31 @@ export const PersonDetails: React.FC<IPersonDetails> = ({
     return (
         <PersonDetailsWrapper>
             <div className="basic-information-box">
-                <ImgBox src={personDetails?.photo}/>
+                <ImgBox src={person?.photo}/>
                 <div className="description-box">
                     <Typography variant="h4">
-                        {personDetails?.name} ({personDetails?.enName})
+                        {person?.name} ({person?.enName})
                     </Typography>
                     <Typography gutterBottom variant="body2">
                         Место
-                        рождения: {personDetails?.birthPlace?.reduce((fullPlace, place, index) => fullPlace + (index ? ", " : "") + place.value, "")}
+                        рождения: {person?.birthPlace?.reduce((fullPlace, place, index) => fullPlace + (index ? ", " : "") + place.value, "")}
                     </Typography>
                     <Typography gutterBottom variant="body2">
-                        Дата рождения: {personDetails?.birthday ? dateFormatter(new Date(personDetails?.birthday)) : "Нет данных"}
+                        Дата рождения: {person?.birthday ? dateFormatter(new Date(person?.birthday)) : "Нет данных"}
                     </Typography>
                     <Typography gutterBottom variant="body2">
-                        Колличесво наград: {personDetails?.countAwards}
+                        Колличесво наград: {person?.countAwards}
                     </Typography>
                 </div>
             </div>
             <div className="persons-info-block">
-                {Boolean(personDetails?.facts?.length) &&
+                {Boolean(person?.facts?.length) &&
                     (<List sx={{width: '100%', maxWidth: 360, bgcolor: 'background.paper'}} subheader={
                         <ListSubheader component="div" id="nested-list-subheader">
                             Факты
                         </ListSubheader>
                     }>
-                        {personDetails?.facts?.slice(0, 6).map((fact) => {
+                        {person?.facts?.slice(0, 6).map((fact) => {
                             return (
                                 <ListItem>
                                     <ListItemText secondary={fact.value}/>
@@ -68,13 +70,13 @@ export const PersonDetails: React.FC<IPersonDetails> = ({
                             )
                         })}
                     </List>)}
-                {Boolean(personDetails?.movies?.length) &&
+                {Boolean(person?.movies?.length) &&
                     (<List sx={{bgcolor: 'background.paper'}} subheader={
                         <ListSubheader component="div" id="nested-list-subheader">
                             Фильмы:
                         </ListSubheader>
                     }>
-                        {personDetails?.movies?.slice(0, 6).map((movie) => {
+                        {person?.movies?.slice(0, 6).map((movie) => {
                             return (
                                 <ListItem onClick={() => onClick && onClick(movie.id)}>
                                     <ListItemAvatar>
@@ -95,6 +97,7 @@ const PersonDetailsWrapper = styled.div`
     display: flex;
     flex-direction: column;
     min-width: 800px;
+    min-height: 950px;
     gap: 1rem;
 
     .basic-information-box {

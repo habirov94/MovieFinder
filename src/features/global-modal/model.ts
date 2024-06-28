@@ -28,5 +28,3 @@ sample({
     },
     target: $modalData,
 })
-
-$modalData.watch(console.log)
